@@ -47,9 +47,7 @@ const NfcCardDetails = ({
         <p className="text-xl font-medium text-gray-600">NFC Card Details</p>
       </div>
       <div className="flex items-center gap-3">
-        <IconButton onClick={handleDecrement("nfcCardCount")}>
-          <Remove />
-        </IconButton>
+       
         <TextField
           id="nfc-card-count"
           label="NFC Card Count"
@@ -66,14 +64,15 @@ const NfcCardDetails = ({
             },
           }}
         />
+         <IconButton onClick={handleDecrement("nfcCardCount")}>
+          <Remove />
+        </IconButton>
         <IconButton onClick={handleIncrement("nfcCardCount")}>
           <Add />
         </IconButton>
       </div>
       <div className="flex items-center gap-3">
-        <IconButton onClick={handleDecrement("nfcCardDuration")}>
-          <Remove />
-        </IconButton>
+        
         <TextField
           id="nfc-card-duration"
           label="NFC Card Duration (years)"
@@ -90,6 +89,9 @@ const NfcCardDetails = ({
             },
           }}
         />
+        <IconButton onClick={handleDecrement("nfcCardDuration")}>
+          <Remove />
+        </IconButton>
         <IconButton onClick={handleIncrement("nfcCardDuration")}>
           <Add />
         </IconButton>
