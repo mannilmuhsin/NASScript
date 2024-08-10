@@ -6,14 +6,14 @@ import Home from "../pages/Home";
 import CompanyForm from "../pages/CompanyForm";
 import CompanyDetails from "../pages/CompanyDetails";
 import Congratulations from "../pages/SuccessPage";
+import AdminHome from "../pages/AdminHome";
+import EditNfc from "../pages/EditNfc";
 
 const appRouter = createBrowserRouter([
   {
     path: "/",
     element: (
-    //   <Protect>
-        <App />
-    //   </Protect>
+      <App />
     ),
     children: [
       {
@@ -21,28 +21,31 @@ const appRouter = createBrowserRouter([
         element: <Home />,
       },
       {
-        path:'/add-company',
-        element:<CompanyForm />
+        path: '/add-company',
+        element: <CompanyForm />
       },
       {
-        path:"/congratulations/:nfcCode",
-         element:<Congratulations />
+        path: "/congratulations/:nfcCode",
+        element: <Congratulations />
       }
     ],
   },
   {
-    path:'/:nfcCode',
-    element:<CompanyDetails/>
+    path: '/:nfcCode',
+    element: <CompanyDetails />
   },
   {
     path: "/login",
     element: <Login />,
   },
-//   {
-//     path: "/signup",
-//     element: <Login />,
-    
-//   },
+  {
+    path: "/admin-home",
+    element: <Protect><AdminHome /></Protect>,
+  },
+  {
+    path: "/editnfc/:nfcCode",
+    element: <Protect><EditNfc /></Protect>,
+  },
 ]);
 
 export default appRouter;

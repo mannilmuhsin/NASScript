@@ -1,22 +1,40 @@
-import axios from "axios";
-// import { store } from "../../utils/context/store";
-import { BASE_URL } from "../constants/baseUrls";
+import axios from 'axios';
+import { BASE_URL } from '../constants/baseUrls';
+// import { useNavigate } from 'react-router-dom';
 
-export const api = axios.create({
+const api = axios.create({
   withCredentials: true,
-  baseURL: `${BASE_URL}`,
+  baseURL: BASE_URL,
 });
 
-// api.interceptors.request.use(
-//   async (config) => {
-//     const state = store.getState();
-//     const authToken = state.auth.token;
+// Request interceptor
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token2'); // Retrieve the token from localStorage
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`; // Attach token to request headers
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
-//     config.headers["Authorization"] = `Bearer ${authToken}`;
+// Response interceptor
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // Unauthorized (401) - Handle logout
+      localStorage.removeItem('token2'); // Remove token from localStorage
+      // Redirect to login page (if using React Router)
+      window.location.href = '/login'; // Or use a method to navigate programmatically in React Router
+    }
+    return Promise.reject(error);
+  }
+);
 
-//     return config;
-//   },
-//   async (error) => {
-//     return Promise.reject(error);
-//   }
-// );
+export { api };

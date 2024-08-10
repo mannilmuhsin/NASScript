@@ -71,6 +71,77 @@ export const addCompany = async (req, res) => {
 };
 
 
+export const editCompany = async (req, res) => {
+  console.log("kkkkkkkkkkk");
+  
+  try {
+    const { nfcCode } = req.params;
+    const {
+      name,
+      email,
+      about,
+      phone,
+      profileImg,
+      whatsapp,
+      facebook,
+      instagram,
+      linkedin,
+      x,
+      domainType,
+      domain,
+      paymentMethod,
+      nfcCardCount,
+      nfcCardDuration,
+      totalCost,
+    } = req.body;
+
+    const paymentStatus = paymentMethod === 'Online Payment' ? 'Completed' : 'Pending';
+
+    let finalDomain = domain;
+    if (domainType === 'Default Design') {
+      finalDomain = `http://localhost:3000/${nfcCode}`;
+    }
+
+    const socialMediaLinks = [];
+    if (whatsapp) socialMediaLinks.push({ platform: 'whatsapp', link: whatsapp });
+    if (facebook) socialMediaLinks.push({ platform: 'facebook', link: facebook });
+    if (instagram) socialMediaLinks.push({ platform: 'instagram', link: instagram });
+    if (linkedin) socialMediaLinks.push({ platform: 'linkedin', link: linkedin });
+    if (x) socialMediaLinks.push({ platform: 'x', link: x });
+
+    // Update company details
+    const updatedCompany = await Company.findOneAndUpdate(
+      { nfcCode },
+      {
+        name,
+        email,
+        about,
+        phone,
+        profileImg,
+        socialMedia: socialMediaLinks,
+        domainType,
+        domain: finalDomain,
+        paymentMethod,
+        paymentStatus,
+        nfcCardCount,
+        nfcCardDuration,
+        totalCost,
+      },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedCompany) {
+      return res.status(404).json({ message: 'Company not found' });
+    }
+
+    res.status(200).json({ message: 'Company updated successfully', company: updatedCompany });
+  } catch (error) {
+    console.error('Error updating company:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+
 
 export const getCompanyUrl = async (req, res) => {
     try {

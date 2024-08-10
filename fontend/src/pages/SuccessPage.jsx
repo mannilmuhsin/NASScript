@@ -20,7 +20,7 @@ function Congratulations() {
     };
 
     fetchCompanies();
-  }, []);
+  }, [nfcCode]);
   const handleCardClick = (company) => {
     if (company.domainType === "Personal URL" && company.domain) {
       window.location.href = company.domain;

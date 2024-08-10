@@ -3,7 +3,7 @@ import { Facebook, Instagram, X, LinkedIn } from '@mui/icons-material';
 
 function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-6">
+    <footer className="bg-gray-800 text-white mt-10 py-6">
       <div className="container mx-auto flex flex-col items-center">
         <div className="flex space-x-4 mb-4">
           <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">

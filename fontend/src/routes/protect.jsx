@@ -1,24 +1,13 @@
-// import { useEffect } from "react";
-// // import { useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
+// src/routes/protect.js
 
-// function Protect({ children }) {
-//   const navigate = useNavigate();
-//   const selectUser = (state) => state.auth.user;
-//   // const user = useSelector(selectUser);
-//   // const isValid = useSelector((state)=> state?.auth?.user);
-//   useEffect(()=>{
-//     if(!user){
-//       navigate('/login')
-//     }
-//   },[])
+import React from "react";
+import { Navigate } from "react-router-dom";
 
-//   if (user) {
-//     console.log(user)
-//     return children;
-//   } else {
-//     navigate("/login");
-//   }
-// }
+const Protect = ({ children }) => {
+    console.log("protect");
+  const isAuthenticated = !!localStorage.getItem("token2"); // Check if token exists
 
-// export default Protect;
+  return isAuthenticated ? children : <Navigate to="/login" />;
+};
+
+export default Protect;

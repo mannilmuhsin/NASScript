@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
+import adminRoutes from "./routes/adminRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import compayRoutes from "./routes/companyRoutes.js";
 import cors from 'cors';
@@ -22,6 +23,7 @@ app.use(
 );
 
 app.use("/", userRoutes);
+app.use("/admin", adminRoutes);
 app.use("/company", compayRoutes);
 
 connectDB();
